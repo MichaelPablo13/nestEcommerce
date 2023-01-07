@@ -19,6 +19,10 @@ export class ProductsService {
   }
 
   createOrUpdate(product: Product): Promise<Product> {
-    return this.productsRepository.save(product)
+    return this.productsRepository.save(product);
+  }
+
+  async remove(id: string): Promise<void> {
+    await this.productsRepository.delete(id);
   }
 }
