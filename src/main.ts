@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import session from 'express-session';
+import * as session from 'express-session';
 import * as hbs from 'hbs';
 import * as hbsUtils from 'hbs-utils';
 import { join } from 'path';
@@ -14,6 +14,7 @@ async function bootstrap() {
   hbs.registerPartials(join(__dirname, '..', 'views/layouts'));
   hbsUtils(hbs).registerWatchedPartials(join(__dirname, '..', 'views/layouts'));
   app.setViewEngine('hbs');
+
   app.use(
     session({
       secret: 'nest-book',
@@ -21,10 +22,15 @@ async function bootstrap() {
       saveUninitialized: false,
     }),
   );
-  app.use((req, res, next) => {
-    res.local.session = req.session;
+  app.use(function (req, res, next) {
+    res.locals.session = req.session;
+    const flashErrors: string[] = req.session.flashErrors;
+    if (flashErrors) {
+      res.locals.flashErrors = flashErrors;
+      req.session.flashErrors = null;
+    }
     next();
-  })
+  });
 
   await app.listen(3000);
 }
