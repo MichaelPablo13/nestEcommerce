@@ -30,7 +30,8 @@
         <!-- sidebar -->
         <div class="col content-grey">
             <nav class="p-3 shadow text-end">
-                <span class="profile-font">Admin</span>
+                <span class="profile-font" >Admin ({{session.user.name}})</span>
+                <a class="profile-font" href="/auth/logout">Logout ({{session.user.name}})</a>
                 <img class="img-profile rounded-circle" src="/img/undraw_profile.svg">
             </nav>
 

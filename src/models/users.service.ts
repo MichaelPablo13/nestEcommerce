@@ -28,4 +28,12 @@ export class UsersService {
         user.setPassword(hash);
         return this.usersRepository.save(user);
     }
+
+    findOne(id: number): Promise<User> {
+        return this.usersRepository.findOne(id);
+    }
+
+    updateBalance(id: number, balance: number) {
+        return this.usersRepository.update(id, { balance: balance });
+    }
 }

@@ -18,7 +18,7 @@ export class ProductsService {
     return this.productsRepository.findOne(id);
   }
 
-  findById(ids: string[]): Promise<Product[]> {
+  findByIds(ids: string[]): Promise<Product[]> {
     return this.productsRepository.findByIds(ids);
   }
 
